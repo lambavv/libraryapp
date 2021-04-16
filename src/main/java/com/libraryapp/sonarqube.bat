@@ -1,0 +1,1 @@
+mvn sonar:sonar -Dsonar.projectKey=library-app -Dsonar.host.url=http://localhost:9000 -Dsonar.login=b6331dbd58d9a4549f954637179f71e28a60e777
