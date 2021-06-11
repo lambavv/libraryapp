@@ -43,7 +43,6 @@ public class TestConstructors {
                 .setAuthor("Test-" + randomAlphabetic(5))
                 .setYear(nextInt(10))
                 .setReserved(false)
-                .setReservedBy(-1)
                 .setId(nextInt(3));
     }
 }

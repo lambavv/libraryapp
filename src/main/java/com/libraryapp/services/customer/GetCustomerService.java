@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import com.libraryapp.domain.models.CustomerModel;
 
+import static com.libraryapp.util.*;
+import static java.util.Collections.singletonList;
+
 @Component
 public class GetCustomerService extends CoreCustomerService {
 
@@ -22,10 +25,24 @@ public class GetCustomerService extends CoreCustomerService {
 
     protected CustomerModel getCustomer(Integer customerId) {
         var customer = customerRepository.findById(customerId);
-        if (customer == null) {
+        if (customer.isEmpty()) {
             LOG.error(String.format("Customer not found. Customer id: %d", customerId));
             throw new ClientErrorException(Response.Status.NOT_FOUND);
         }
-        return customer;
+        return customer.get();
+    }
+
+    protected List<CustomerModel> getCustomers(String searchString) {
+       if(match(REGEX_DIGITS_ONLY, searchString)) {
+           var customer = customerRepository.findById(Integer.parseInt(searchString));
+           if (customer.isPresent()) {
+               return singletonList(customer.get());
+           }
+       }
+       return customerRepository.findByFullNameLikeIgnoreCase(String.format(findByLikePattern, searchString));
+    }
+
+    protected Boolean existsById(Integer customerId) {
+        return customerRepository.existsById(customerId);
     }
 }

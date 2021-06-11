@@ -4,6 +4,7 @@ import static java.util.Objects.isNull;
 
 import javax.inject.Inject;
 
+import com.libraryapp.db.h2.repositories.CustomerBookLinkRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,8 @@ public abstract class CoreCustomerService {
 
     @Inject
     CustomerRepository customerRepository;
+    @Inject
+    CustomerBookLinkRepository customerBookLinkRepository;
 
     private static final Logger LOG = LoggerFactory.getLogger(CoreCustomerService.class);
 

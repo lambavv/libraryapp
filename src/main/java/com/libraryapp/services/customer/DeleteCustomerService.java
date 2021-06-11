@@ -15,6 +15,8 @@ public class DeleteCustomerService extends CoreCustomerService {
         LOG.info("Deleting customer from DB...");
         customerRepository.delete(customer);
         LOG.info("customer deleted:" + customer.toString());
+        var links = customerBookLinkRepository.findByCustomerId(customer.getId());
+        customerBookLinkRepository.deleteAll(links);
         return customer;
     }
 }

@@ -39,22 +39,5 @@ public class BookModelTest {
         fieldsAreEqual(bookModel, bookRequest);
     }
 
-    @Test
-    public void updateReservedByTest() {
-        var bookModel = createBookModel();
-        var customerModel = createCustomerModel();
-        assertThat(bookModel.getReservedBy(), is(not(customerModel.getId())));
-        bookModel.updateReservedBy(customerModel);
-        assertThat(bookModel.getReservedBy(), is(customerModel.getId()));
-    }
 
-    @Test
-    public void updateBookReturnedTest() {
-        var bookModel = createBookModel().setReserved(true).setReservedBy(nextInt());
-        assertThat(bookModel.getReservedBy(), is(not(-1)));
-        assertThat(bookModel.getReserved(), is(true));
-        bookModel.updateBookReturned();
-        assertThat(bookModel.getReservedBy(), is(-1));
-        assertThat(bookModel.getReserved(), is(false));
-    }
 }

@@ -16,7 +16,7 @@ public class BookModel {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "title")
     private String title;
     @Column(name = "author")
@@ -27,8 +27,6 @@ public class BookModel {
     private String isbn;
     @Column(name = "reserved")
     private Boolean reserved;
-    @Column(name = "reserved_by")
-    private Integer reservedBy;
 
     public static BookModel fromRequest(BookRequest bookRequest) {
         return new BookModel()
@@ -36,15 +34,15 @@ public class BookModel {
                 .setIsbn(bookRequest.isbn)
                 .setTitle(bookRequest.title)
                 .setYear(bookRequest.year)
-                .setReserved(false)
-                .setReservedBy(-1);
+                .setReserved(bookRequest.reserved);
     }
 
     public void updateFields(BookRequest bookRequest) {
         this.setAuthor(bookRequest.author)
                 .setIsbn(bookRequest.isbn)
                 .setTitle(bookRequest.title)
-                .setYear(bookRequest.year);
+                .setYear(bookRequest.year)
+                .setReserved(bookRequest.reserved);
     }
 
     public String toString() {
@@ -52,14 +50,12 @@ public class BookModel {
                getId(), getAuthor(), getTitle(), getIsbn(), getYear(), getReserved());
     }
 
-    public BookModel updateReservedBy(CustomerModel customer) {
-        return setReserved(true)
-                .setReservedBy(customer.getId());
+    public BookModel updateReservedBy() {
+        return setReserved(true);
     }
 
     public BookModel updateBookReturned() {
-        return setReserved(false)
-                .setReservedBy(-1);
+        return setReserved(false);
     }
 
     public Boolean getReserved() {
@@ -107,20 +103,11 @@ public class BookModel {
         return this;
     }
 
-    public Integer getReservedBy() {
-        return reservedBy;
-    }
-
-    public BookModel setReservedBy(Integer reservedBy) {
-        this.reservedBy = reservedBy;
-        return this;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public BookModel setId(int id) {
+    public BookModel setId(Integer id) {
         this.id = id;
         return this;
     }

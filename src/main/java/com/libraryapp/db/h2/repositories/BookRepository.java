@@ -13,6 +13,12 @@ public interface BookRepository extends CrudRepository<BookModel, String> {
     List<BookModel> findAll();
 
     BookModel findById(Integer id);
-    
+
+    BookModel findByIsbn(String isbn);
+
+    List<BookModel> findByTitleLikeIgnoreCase(String title);
+
+    List<BookModel> findByAuthorLikeIgnoreCase(String author);
+
     List<BookModel> findByIdIn(List<Integer> ids);
 }

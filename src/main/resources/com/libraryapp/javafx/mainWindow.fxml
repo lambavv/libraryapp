@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libraryapp.javafx.mainController">
+   <children>
+      <MenuBar prefWidth="10.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="New" />
+                  <MenuItem mnemonicParsing="false" text="Open…" />
+                  <Menu mnemonicParsing="false" text="Open Recent" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem mnemonicParsing="false" text="Save As…" />
+                  <MenuItem mnemonicParsing="false" text="Revert" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Preferences…" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Quit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Undo" />
+                  <MenuItem mnemonicParsing="false" text="Redo" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Cut" />
+                  <MenuItem mnemonicParsing="false" text="Copy" />
+                  <MenuItem mnemonicParsing="false" text="Paste" />
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Select All" />
+                  <MenuItem mnemonicParsing="false" text="Unselect All" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About LibraryApp" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <TabPane prefHeight="574.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab closable="false" text="Customers">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="405.0" prefWidth="800.0">
+                     <children>
+                        <Separator layoutX="265.0" layoutY="73.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="0.0" />
+                        <TextField fx:id="searchBarCustomer" layoutX="64.0" layoutY="314.0" promptText="Search by Name or ID" />
+                        <TableView fx:id="customerTable" layoutX="290.0" layoutY="41.0" prefHeight="432.0" prefWidth="481.0">
+                          <columns>
+                            <TableColumn fx:id="idColumnCustomer" prefWidth="46.4000244140625" sortable="false" text="ID" />
+                            <TableColumn fx:id="fullNameColumn" prefWidth="132.79998779296875" sortable="false" text="FULL_NAME" />
+                              <TableColumn fx:id="dobColumn" prefWidth="119.199951171875" sortable="false" text="DATE_OF_BIRTH" />
+                              <TableColumn fx:id="addressColumn" prefWidth="98.39990234375" sortable="false" text="ADDRESS" />
+                              <TableColumn fx:id="reservedColumn" prefWidth="82.400146484375" sortable="false" text="RESERVED" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="searchCustomerButton" layoutX="113.0" layoutY="354.0" mnemonicParsing="false" text="Search" />
+                        <ImageView fx:id="customerImage" fitHeight="192.0" fitWidth="142.0" layoutX="71.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../customerIcon.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="newButtonCustomer" layoutX="381.0" layoutY="490.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="97.0" text="Create New" textOverrun="WORD_ELLIPSIS" />
+                        <Button fx:id="editButtonCustomer" disable="true" layoutX="586.0" layoutY="490.0" mnemonicParsing="false" opacity="0.66" prefHeight="26.0" prefWidth="97.0" text="Edit" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab closable="false" text="Books">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="bookTable" layoutX="237.0" layoutY="48.0" prefHeight="429.0" prefWidth="542.0">
+                           <columns>
+                              <TableColumn fx:id="idColumnBook" prefWidth="41.60003662109375" sortable="false" text="ID" />
+                              <TableColumn fx:id="titleColumn" prefWidth="126.39996337890625" sortable="false" text="TITLE" />
+                              <TableColumn fx:id="authorColumn" prefWidth="115.20001220703125" sortable="false" text="AUTHOR" />
+                              <TableColumn fx:id="yearColumn" prefWidth="92.79998779296875" sortable="false" text="YEAR" />
+                              <TableColumn fx:id="isbnColumn" prefWidth="78.39996337890625" sortable="false" text="ISBN" />
+                              <TableColumn fx:id="reservedByColumn" minWidth="7.200048828124977" prefWidth="86.40004882812502" sortable="false" text="ReservedBy" />
+                           </columns>
+                        </TableView>
+                        <Separator layoutX="212.0" layoutY="85.0" orientation="VERTICAL" prefHeight="390.0" prefWidth="6.0" />
+                        <Button fx:id="searchBookButton" layoutX="76.0" layoutY="336.0" mnemonicParsing="false" text="Search" />
+                        <Button fx:id="newButtonBook" layoutX="344.0" layoutY="494.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="97.0" text="Create New" textOverrun="WORD_ELLIPSIS" />
+                        <Button fx:id="editButtonBook" disable="true" layoutX="545.0" layoutY="494.0" mnemonicParsing="false" opacity="0.66" prefHeight="26.0" prefWidth="97.0" text="Edit" />
+                        <TextField fx:id="searchBarBook" layoutX="24.0" layoutY="295.0" prefHeight="25.0" prefWidth="155.0" promptText="Search by Title, Id or ISBN"/>
+                        <ImageView fx:id="bookImage" fitHeight="167.0" fitWidth="166.0" layoutX="16.0" layoutY="107.0" opacity="0.42" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../bookIcon.png" />
+                           </image></ImageView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>

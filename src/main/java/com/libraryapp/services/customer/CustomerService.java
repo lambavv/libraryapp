@@ -30,6 +30,10 @@ public class CustomerService {
         return getCustomerService.getCustomer(customerId);
     }
 
+    public List<CustomerModel> getCustomers(String searchString) {
+        return getCustomerService.getCustomers(searchString);
+    }
+
     public List<CustomerModel> getAllCustomers() {
         return getCustomerService.getAllCustomers();
     }
@@ -42,6 +46,10 @@ public class CustomerService {
     public CustomerModel deleteCustomer(Integer customerId) {
         var customerModel = getCustomer(customerId);
         return deleteCustomerService.deleteCustomer(customerModel);
+    }
+
+    public Boolean existsById(Integer customerId) {
+        return getCustomerService.existsById(customerId);
     }
 
 }

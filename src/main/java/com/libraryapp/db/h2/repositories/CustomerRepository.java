@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.libraryapp.domain.models.CustomerModel;
 
 @Repository
-public interface CustomerRepository extends CrudRepository<CustomerModel, String> {
+public interface CustomerRepository extends CrudRepository<CustomerModel, Integer> {
 
     List<CustomerModel> findAll();
 
-    CustomerModel findById(Integer id);
+   List<CustomerModel> findByFullNameLikeIgnoreCase(String fullName);
 }

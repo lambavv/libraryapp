@@ -4,13 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.libraryapp.domain.models.CustomerModel;
 import com.libraryapp.domain.request.CustomerRequest;
@@ -32,19 +26,29 @@ public class CustomerController {
         return customerService.getCustomer(customerId);
     }
 
+    @GetMapping("/customers/search")
+    public List<CustomerModel> getCustomers(@RequestParam String searchQuery) {
+        return customerService.getCustomers(searchQuery);
+    }
+
     @PostMapping("/customers")
     public CustomerModel createCustomer(@RequestBody CustomerRequest customerRequest) {
         return customerService.createCustomer(customerRequest);
     }
 
-    @DeleteMapping("/customers/{customerId}/delete")
+    @DeleteMapping("/customers/{customerId}")
     public CustomerModel deleteCustomer(@PathVariable Integer customerId) {
         return customerService.deleteCustomer(customerId);
     }
 
-    @PutMapping("/customers/{customerId}/update")
+    @PutMapping("/customers/{customerId}")
     public CustomerModel updateCustomer(@PathVariable Integer customerId,
             @RequestBody CustomerRequest customerRequest) {
         return customerService.updateCustomer(customerId, customerRequest);
+    }
+
+    @GetMapping("/customer/{customerId}/exists")
+    public Boolean existsById(@PathVariable Integer customerId) {
+        return customerService.existsById(customerId);
     }
 }

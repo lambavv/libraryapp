@@ -14,6 +14,9 @@ public class DeleteBookService extends CoreBookService  {
     BookModel deleteBook(BookModel book) {
         LOG.info("Deleting book from DB...");
         bookRepository.delete(book);
+        if(customerBookLinkRepository.existsById(book.getId())) {
+            customerBookLinkRepository.deleteById(book.getId());
+        }
         LOG.info("Book deleted:" + book.toString());
         return book;
     }

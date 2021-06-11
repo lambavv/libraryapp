@@ -31,7 +31,7 @@ public class CheckoutServiceTest {
     @Mock
     BookRepository bookRepository;
 
-    @Test
+/*    @Test
     public void checkoutBooksTest() {
         var bookIds = singletonList(nextInt());
         var books = singletonList(createBookModel().setId(bookIds.get(0)));
@@ -44,7 +44,7 @@ public class CheckoutServiceTest {
         checkoutService.checkoutBooks(customerId, bookIds);
         var reservedBooks = singletonList(books.get(0).updateReservedBy(customer));
         verify(bookRepository).saveAll(reservedBooks);
-    }
+    }*/
 
     @Test(expected = ClientErrorException.class)
     public void checkoutBooksAlreadyReservedTest() {
@@ -57,7 +57,7 @@ public class CheckoutServiceTest {
         checkoutService.checkoutBooks(customerId, bookIds);
     }
 
-    @Test
+/*    @Test
     public void returnBooksTest() {
         var bookIds = singletonList(nextInt());
         var customerId = nextInt();
@@ -70,9 +70,9 @@ public class CheckoutServiceTest {
         checkoutService.returnBooks(customerId, bookIds);
         var returnedBooks = singletonList(books.get(0).updateBookReturned());
         verify(bookRepository).saveAll(returnedBooks);
-    }
+    }*/
 
-    @Test(expected = ClientErrorException.class)
+/*    @Test(expected = ClientErrorException.class)
     public void returnBooksNotReservedTest() {
         var bookIds = singletonList(nextInt());
         var customerId = nextInt();
@@ -93,5 +93,5 @@ public class CheckoutServiceTest {
         when(customerService.getCustomer(customerId)).thenReturn(customer);
 
         checkoutService.returnBooks(customerId, bookIds);
-    }
+    }*/
 }

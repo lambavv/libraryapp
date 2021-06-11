@@ -16,7 +16,7 @@ public class CustomerModel {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "full_name")
     String fullName;
     @Column(name = "date_of_birth")
@@ -70,11 +70,11 @@ public class CustomerModel {
         return this;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public CustomerModel setId(int id) {
+    public CustomerModel setId(Integer id) {
         this.id = id;
         return this;
     }

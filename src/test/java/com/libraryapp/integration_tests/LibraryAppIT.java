@@ -200,7 +200,6 @@ public class LibraryAppIT {
         var bookResponse1 = createBook(entity);
         var book1 = objectMapper.readValue(bookResponse1.getBody(), BookModel.class);
         assertThat(book1.getReserved(), is(false));
-        assertThat(book1.getReservedBy(), is(-1));
 
 
         var bookRequest2 = createBookRequest();
@@ -208,7 +207,6 @@ public class LibraryAppIT {
         var bookResponse2 = createBook(entity);
         var book2 = objectMapper.readValue(bookResponse2.getBody(), BookModel.class);
         assertThat(book2.getReserved(), is(false));
-        assertThat(book2.getReservedBy(), is(-1));
 
         var customerRequest = createCustomerRequest();
         var customerEntity = new HttpEntity<>(customerRequest, headers);
@@ -228,7 +226,6 @@ public class LibraryAppIT {
         var bookResponse1 = createBook(entity);
         var book1 = objectMapper.readValue(bookResponse1.getBody(), BookModel.class);
         assertThat(book1.getReserved(), is(false));
-        assertThat(book1.getReservedBy(), is(-1));
 
 
         var bookRequest2 = createBookRequest();
@@ -236,7 +233,6 @@ public class LibraryAppIT {
         var bookResponse2 = createBook(entity);
         var book2 = objectMapper.readValue(bookResponse2.getBody(), BookModel.class);
         assertThat(book2.getReserved(), is(false));
-        assertThat(book2.getReservedBy(), is(-1));
 
         var customerRequest = createCustomerRequest();
         var customerEntity = new HttpEntity<>(customerRequest, headers);

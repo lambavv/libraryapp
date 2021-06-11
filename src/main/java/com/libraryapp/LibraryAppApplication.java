@@ -2,24 +2,24 @@ package com.libraryapp;
 
 import javax.inject.Inject;
 
+import com.libraryapp.javafx.loginController;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Profile;
 
 import com.libraryapp.services.terminal.TerminalService;
 
 @SpringBootApplication
+@EnableEncryptableProperties
 @EnableAutoConfiguration
-@ComponentScan("com.LibraryApp")
-@EntityScan("com.LibraryApp.domain")
+@ComponentScan("com.libraryapp")
+@ComponentScan(basePackageClasses={loginController.class})
+@EntityScan("com.libraryapp.domain")
 public class LibraryAppApplication {
 
     @Inject
@@ -28,16 +28,8 @@ public class LibraryAppApplication {
     private static final Logger LOG = LoggerFactory.getLogger(LibraryAppApplication.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(LibraryAppApplication.class, args);
+        //SpringApplication.run(LibraryAppApplication.class, args);
+        Application.launch(JavaFxApplication.class, args);
     }
 
-    @Bean
-    @Profile("!test")
-    public CommandLineRunner commandLineRunner(ApplicationContext context) {
-        return args -> {
-            LOG.info("Starting LibraryApp...");
-            LOG.info("Loading interface...");
-            terminalService.openTerminal();
-        };
-    }
 }

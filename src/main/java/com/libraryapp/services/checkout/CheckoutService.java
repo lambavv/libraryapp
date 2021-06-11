@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
 
+import com.libraryapp.db.h2.repositories.CustomerBookLinkRepository;
+import com.libraryapp.domain.models.CustomerBookLinkModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,8 @@ import com.libraryapp.domain.models.CustomerModel;
 import com.libraryapp.services.book.BookService;
 import com.libraryapp.services.customer.CustomerService;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 public class CheckoutService {
 
@@ -25,23 +29,48 @@ public class CheckoutService {
     BookService bookService;
     @Inject
     BookRepository bookRepository;
+    @Inject
+    CustomerBookLinkRepository customerBookLinkRepository;
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckoutService.class);
 
+    public CustomerBookLinkModel getCustomerBookLink(Integer bookId) {
+        return customerBookLinkRepository.findByBookId(bookId);
+    }
+
+    public List<CustomerBookLinkModel> getCustomerBookLinks(Integer customerId) {
+        return customerBookLinkRepository.findByCustomerId(customerId);
+    }
+
+    public void createCustomerBookLink(Integer bookId, Integer customerId) {
+        var customerBookLink = new CustomerBookLinkModel()
+                .setBookId(bookId)
+                .setCustomerId(customerId);
+        customerBookLinkRepository.save(customerBookLink);
+    }
+
     public void checkoutBooks(Integer customerId, List<Integer> bookIds) {
-        var books = getBooksAndValidate(bookIds, false);
-        var customer = customerService.getCustomer(customerId);
-        books.forEach(book -> book.updateReservedBy(customer));
+        var books = bookService.getBooks(bookIds);
+        books.forEach(book -> createCustomerBookLink(book.getId(), customerId));
+        books.forEach(book -> book.setReserved(true));
         bookRepository.saveAll(books);
     }
 
+    public boolean existsBy(Integer bookId) {
+        return customerBookLinkRepository.existsById(bookId);
+    }
+
     public void returnBooks(Integer customerId, List<Integer> bookIds) {
-        var books = getBooksAndValidate(bookIds, true);
+        var books = bookService.getBooks(bookIds);
         books.forEach(book -> book.setReserved(false));
 
-        var customer = customerService.getCustomer(customerId);
-        validateBooksReservedByCustomer(books, customer, bookIds);
+        var customerBookLinks = customerBookLinkRepository.findByCustomerId(customerId);
+        validateBooksReservedByCustomer(customerBookLinks, customerId, bookIds);
         books.forEach(BookModel::updateBookReturned);
+        var returnedBookLinks = customerBookLinks.stream()
+                .filter(link -> bookIds.contains(link.getBookId()))
+                .collect(toList());
+        customerBookLinkRepository.deleteAll(returnedBookLinks);
         bookRepository.saveAll(books);
     }
 
@@ -70,10 +99,13 @@ public class CheckoutService {
         }
     }
 
-    private void validateBooksReservedByCustomer(List<BookModel> books, CustomerModel customer, List<Integer> bookIds) {
-        if (books.stream().anyMatch(book -> book.getReservedBy() != customer.getId())) {
+    private void validateBooksReservedByCustomer(List<CustomerBookLinkModel> checkedOutBooks, Integer customerId, List<Integer> bookIds) {
+        var checkedOutBookIds = checkedOutBooks.stream()
+                .map(CustomerBookLinkModel::getBookId)
+                .collect(toList());
+        if (!checkedOutBookIds.containsAll(bookIds)) {
             LOG.error("One or more books is not reserved by the customer, unable to return. BookIds: " + bookIds
-                    + ", customerId: " + customer.getId());
+                    + ", customerId: " + customerId);
             throw new ClientErrorException(Response.status(Response.Status.CONFLICT).build());
         }
     }
