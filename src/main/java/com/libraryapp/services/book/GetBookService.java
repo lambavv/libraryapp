@@ -1,7 +1,9 @@
 package com.libraryapp.services.book;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
@@ -12,7 +14,9 @@ import org.springframework.stereotype.Component;
 
 import com.libraryapp.domain.models.BookModel;
 
-import static com.libraryapp.util.findByLikePattern;
+import static com.libraryapp.utils.util.*;
+import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class GetBookService extends CoreBookService {
@@ -31,6 +35,27 @@ public class GetBookService extends CoreBookService {
             throw new ClientErrorException(Response.Status.NOT_FOUND);
         }
         return book;
+    }
+
+    public List<BookModel> getBooks(String searchQuery) {
+        if(match(REGEX_ISBN_TEN_DIGITS, searchQuery)) {
+            return singletonList(getBookByISBN(searchQuery));
+        }
+        if (match(REGEX_DIGITS_ONLY, searchQuery)) {
+            var books = new ArrayList<BookModel>();
+            try {
+                books.add(getBook(Integer.parseInt(searchQuery)));
+            } catch (Exception e) {
+                LOG.debug("Could not find the book with ID: " + searchQuery);
+            }
+            books.addAll(getBookByTitle(searchQuery));
+            return books;
+        }
+        var booksFoundByTitle = getBookByTitle(searchQuery);
+        var booksFoundByAuthor = getBookByAuthor(searchQuery);
+        return Stream.concat(booksFoundByAuthor.stream(), booksFoundByTitle.stream())
+                .distinct()
+                .collect(toList());
     }
 
     protected BookModel getBookByISBN(String isbn) {

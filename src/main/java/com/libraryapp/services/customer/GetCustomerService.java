@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.libraryapp.domain.models.CustomerModel;
 
-import static com.libraryapp.util.*;
+import static com.libraryapp.utils.util.*;
 import static java.util.Collections.singletonList;
 
 @Component

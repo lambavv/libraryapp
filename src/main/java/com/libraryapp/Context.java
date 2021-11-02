@@ -19,6 +19,4 @@ public class Context {
 
     public static FxWeaver fxWeaver;
     public static Map<String, Object> sharedData = new HashMap<>();
-
-
 }

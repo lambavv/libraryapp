@@ -1,18 +1,15 @@
 package com.libraryapp.services.book;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.libraryapp.domain.models.BookModel;
 import com.libraryapp.domain.request.BookRequest;
-
-import static com.libraryapp.util.*;
-import static java.util.Collections.singletonList;
-import static java.util.stream.Collectors.toList;
 
 @Component
 public class BookService {
@@ -35,17 +32,7 @@ public class BookService {
     }
 
     public List<BookModel> getBooks(String searchQuery) {
-        if(match(REGEX_ISBN_TEN_DIGITS, searchQuery)) {
-            return singletonList(getBookByIsbn(searchQuery));
-        }
-        if (match(REGEX_DIGITS_ONLY, searchQuery)) {
-            return singletonList(getBook(Integer.parseInt(searchQuery)));
-        }
-        var booksFoundByTitle = getBookByTitle(searchQuery);
-        var booksFoundByAuthor = getBookByAuthor(searchQuery);
-        return Stream.concat(booksFoundByAuthor.stream(), booksFoundByTitle.stream())
-                .distinct()
-                .collect(toList());
+        return getBookService.getBooks(searchQuery);
     }
 
     public BookModel getBookByIsbn(String isbn) {
@@ -73,7 +60,7 @@ public class BookService {
         return deleteBookService.deleteBook(existingBook);
     }
 
-    public BookModel updateBook(Integer bookId, BookRequest bookRequest){
+    public BookModel updateBook(Integer bookId, BookRequest bookRequest) {
         var existingBook = getBook(bookId);
         return updateBookService.updateBook(existingBook, bookRequest);
     }

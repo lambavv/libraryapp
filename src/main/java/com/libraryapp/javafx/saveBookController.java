@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import static com.libraryapp.Context.EDIT_BOOK_KEY;
-import static com.libraryapp.util.*;
+import static com.libraryapp.utils.util.*;
 import static java.util.Collections.singletonList;
 import static org.apache.logging.log4j.util.Strings.EMPTY;
 import static org.apache.logging.log4j.util.Strings.isBlank;
@@ -181,7 +181,6 @@ public class saveBookController extends BaseController {
     }
 
     private void saveLink(String bookId) {
-        var existsByIdEndpoint = this.endpointUrl + "/customers/book/" + bookId;
         try {
             var linkedCustomerId = reservedByInput.getText();
             var checkoutBookEndpoint = this.endpointUrl + "/customers/" + linkedCustomerId + "/checkout";

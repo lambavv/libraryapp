@@ -27,16 +27,12 @@ import java.util.List;
 
 import static com.libraryapp.Context.EDIT_BOOK_KEY;
 import static com.libraryapp.Context.EDIT_CUSTOMER_KEY;
-import static com.libraryapp.util.disableButton;
-import static com.libraryapp.util.enableButton;
 import static java.util.stream.Collectors.toList;
 
 @Component
 @FxmlView("mainWindow.fxml")
 public class mainController extends BaseController {
 
-    private static String idRegex = "[0-9]+";
-    private static String isbnRegex = "ISBN[0-9]{10}";
     private static String BOOK_NOT_RESERVED = "None";
 
     private static final Logger LOG = LoggerFactory.getLogger(mainController.class);

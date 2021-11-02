@@ -14,10 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import static com.libraryapp.Context.EDIT_CUSTOMER_KEY;
-import static com.libraryapp.util.*;
+import static com.libraryapp.utils.util.*;
 
 
 @Component

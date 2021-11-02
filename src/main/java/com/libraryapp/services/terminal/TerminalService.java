@@ -20,6 +20,7 @@ import com.libraryapp.services.book.BookService;
 import com.libraryapp.services.customer.CustomerService;
 
 @Component
+@Deprecated
 public class TerminalService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TerminalService.class);
